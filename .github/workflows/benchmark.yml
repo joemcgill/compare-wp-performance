@@ -20,10 +20,12 @@ on:
         - twentytwentyone
         - twentytwentythree
         - twentytwentyfour
-        required: true
 
 jobs:
   benchmarks:
+    strategy:
+      matrix:
+        run: [1,2,3,4,5],
     name: "Benchmarks"
     runs-on: ubuntu-latest
     steps:
@@ -114,12 +116,14 @@ jobs:
       - name: Benchmark Web Vitals
         working-directory: wpp-research
         run: |
+          echo "## Run $RUN" >> $GITHUB_STEP_SUMMARY
           npm run research --silent -- benchmark-web-vitals -u http://localhost:8881/ -n 100 -p -v -o csv > before.csv
           npm run research --silent -- benchmark-web-vitals -u http://localhost:8891/ -n 100 -p -v -o csv > after.csv
           node ../scripts/results.js "Web Vitals ($THEME)" before.csv after.csv > summary.md
           cat summary.md >> $GITHUB_STEP_SUMMARY
         env:
           THEME: ${{ inputs.theme }}
+          RUN: ${{ matrix.run }}
 
       - name: Benchmark Server-Timing
         working-directory: wpp-research
