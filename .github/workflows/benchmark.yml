@@ -117,9 +117,9 @@ jobs:
       - name: Benchmark Web Vitals
         working-directory: wpp-research
         run: |
-          echo "## Run $RUN" >> $GITHUB_STEP_SUMMARY
-          echo "**Before:** $OLD_VERSION
-          echo "**After:** $NEW_VERSION
+          echo "## Run $RUN
+          **Before:** $OLD_VERSION
+          **After:** $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
           npm run research --silent -- benchmark-web-vitals -u http://localhost:8881/ -n 100 -p -v -o csv > before.csv
           npm run research --silent -- benchmark-web-vitals -u http://localhost:8891/ -n 100 -p -v -o csv > after.csv
           node ../scripts/results.js "Web Vitals ($THEME)" before.csv after.csv > summary.md
