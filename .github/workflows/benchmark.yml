@@ -120,8 +120,8 @@ jobs:
           echo "## Run $RUN
           **Before:** $OLD_VERSION
           **After:** $NEW_VERSION" >> $GITHUB_STEP_SUMMARY
-          npm run research --silent -- benchmark-web-vitals -u http://localhost:8881/ -n 100 -p -v -o csv > before.csv
-          npm run research --silent -- benchmark-web-vitals -u http://localhost:8891/ -n 100 -p -v -o csv > after.csv
+          npm run research --silent -- benchmark-web-vitals -u http://localhost:8881/ -n 20 -t 4 -c "Fast 3G" -p -v -o csv > before.csv
+          npm run research --silent -- benchmark-web-vitals -u http://localhost:8891/ -n 20 -t 4 -c "Fast 3G" -p -v -o csv > after.csv
           node ../scripts/results.js "Web Vitals ($THEME)" before.csv after.csv > summary.md
           cat summary.md >> $GITHUB_STEP_SUMMARY
         env:
